@@ -1,5 +1,4 @@
 ﻿using HotelLandon.Models;
-using System;
 using System.Collections.Generic;
 
 namespace HotelLandon.Voyelle
@@ -8,24 +7,13 @@ namespace HotelLandon.Voyelle
     {
         static void Main(string[] args)
         {
-            List<Room> boite = new List<Room>();
+            RoomsController roomsController = new RoomsController();
+            List<Room> rooms = roomsController.AddRooms();
+            roomsController.ShowRooms(rooms);
 
-            for (int indexFloor = 1; indexFloor <= 10; indexFloor++)
-            {
-                for (int indexRoomNumber = 0; indexRoomNumber < 10; indexRoomNumber++)
-                {
-                    int roomNumber = indexFloor * 100 + indexRoomNumber;
-                    Room room1 = new Room(indexFloor, roomNumber);
-                    boite.Add(room1);
-                }
-            }
-
-            foreach (Room room2 in boite)
-            {
-                Console.WriteLine(room2);
-            }
-
-            Console.ReadLine();
+            CustomersController customersController = new CustomersController();
+            List<Customer> customers = customersController.AddCustomers();
+            customersController.ShowCustomers(customers);
         }
     }
 }
