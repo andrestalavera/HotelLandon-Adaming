@@ -39,5 +39,14 @@
             IsBooked = isBooked;
         }
         #endregion
+
+        /// <summary>
+        /// Représenter la classe <see cref="Room"/> en toutes lettres
+        /// </summary>
+        /// <returns>une chaîne de caractères</returns>
+        public override string ToString()
+        {
+            return base.ToString() + ": Etage: " + Floor + " Chambre: " + Number;
+        }
     }
 }
