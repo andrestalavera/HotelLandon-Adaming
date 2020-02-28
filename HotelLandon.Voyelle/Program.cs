@@ -1,6 +1,8 @@
 ﻿using HotelLandon.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace HotelLandon.Voyelle
 {
@@ -47,8 +49,22 @@ namespace HotelLandon.Voyelle
                 customer = new Customer(firstName, lastName, birthDate, isFemale2);
             }
 
-            string confirmation = Book(customer, new Room(1, 1), startDate, endDate);
-            Console.WriteLine(confirmation);
+            string csv = Book(customer, new Room(1, 1), startDate, endDate);
+
+
+
+            StreamWriter writer = new StreamWriter(@"C:\Demo\Reservations-WS.txt");
+            writer.WriteLine(csv);
+            writer.Close();
+
+
+            StreamReader reader = new StreamReader("");
+            var content = reader.ReadToEnd();
+            reader.Close();
+
+            FileStream fileStream = File.Create(@"");
+            byte[] bytes = Encoding.BigEndianUnicode.GetBytes(csv);
+            fileStream.Write(bytes);
         }
 
         static string DemanderQuelquechose(string question)
@@ -66,7 +82,9 @@ namespace HotelLandon.Voyelle
             reservation.Start = start;
             reservation.End = end;
 
-            return customer + " a réservé la chambre " + room.Number + " du " + reservation.Start + " au " + reservation.End;
+            return $"{reservation.Customer.IsFemale};{reservation.Customer.FirstName};" +
+                $"{reservation.Customer.LastName};{reservation.Customer.BirthDate};" +
+                $"{reservation.Room.Number};{reservation.Start};{reservation.End};";
         }
     }
 }
