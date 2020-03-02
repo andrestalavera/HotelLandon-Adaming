@@ -1,6 +1,7 @@
 ﻿using HotelLandon.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -15,42 +16,27 @@ namespace HotelLandon.Voyelle
             roomsController.ShowRooms(rooms);
 
             // demander les informations
-            string firstName = DemanderQuelquechose("Prénom du client:");
-            string lastName = DemanderQuelquechose("Nom du client: ");
-            string birth = DemanderQuelquechose("Date de naissance (jj/mm/aaaa): ");
-            string isFemale = DemanderQuelquechose("Est-ce une femme?");
-            string start = DemanderQuelquechose("Date d'arrivée (jj/mm/aaaa):");
-            string end = DemanderQuelquechose("Date de départ (jj/mm/aaaa):");
-            string numero = DemanderQuelquechose("Chambre souhaitée:");
-
-            // tranformer les informations
-            DateTime birthDate = DateTime.ParseExact(birth, "dd/MM/yyyy", null);
-            DateTime startDate = DateTime.ParseExact(start, "dd/MM/yyyy", null);
-            DateTime endDate = DateTime.ParseExact(end, "dd/MM/yyyy", null);
-
-            bool isFemale2;
-            if (isFemale.Equals("oui", StringComparison.InvariantCultureIgnoreCase))
-            {
-                isFemale2 = true;
-            }
-            else
-            {
-                isFemale2 = false;
-            }
+            string firstName = (string)DemanderQuelquechose("Prénom du client:");
+            string lastName = (string)DemanderQuelquechose("Nom du client: ");
+            DateTime birth = (DateTime)DemanderQuelquechose("Date de naissance (jj/mm/aaaa): ");
+            bool isFemale = (bool)DemanderQuelquechose("Est-ce une femme?");
+            DateTime start = (DateTime)DemanderQuelquechose("Date d'arrivée (jj/mm/aaaa):");
+            DateTime end = (DateTime)DemanderQuelquechose("Date de départ (jj/mm/aaaa):");
+            int numero = (int)DemanderQuelquechose("Chambre souhaitée:");
 
             // écrire les informations
             Customer customer;
             if (string.IsNullOrWhiteSpace(lastName))
             {
-                customer = new Customer(firstName, birthDate, isFemale2);
+                customer = new Customer(firstName, birth, isFemale);
             }
             else
             {
-                customer = new Customer(firstName, lastName, birthDate, isFemale2);
+                customer = new Customer(firstName, lastName, birth, isFemale);
             }
 
-            string csv = Book(customer, new Room(1, 1), startDate, endDate);
-            
+            string csv = Book(customer, new Room(1, 1), start, end);
+
             using (StreamWriter writer = new StreamWriter(@"C:\Demo\Reservations.txt"))
             {
                 writer.WriteLine(csv);
@@ -62,26 +48,30 @@ namespace HotelLandon.Voyelle
                 string[] data = content.Split(';');
                 Customer readedCustomer = new Customer(data[1], data[2], DateTime.ParseExact(data[3], "dd/MM/yyyy", null), bool.Parse(data[0]));
                 Console.WriteLine(readedCustomer.FirstName + " " + readedCustomer.LastName);
-
-
-
-
-
-
-
-                
-
-
-
-
-
             }
         }
-
-        static string DemanderQuelquechose(string question)
+        
+        static object DemanderQuelquechose(string question)
         {
             Console.WriteLine(question);
-            return Console.ReadLine();
+            string reponse = Console.ReadLine();
+
+            if (DateTime.TryParseExact(reponse, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime date))
+            {
+                return date;
+            }
+            else if (int.TryParse(reponse, out int entier))
+            {
+                return entier;
+            }
+            else if (bool.TryParse(reponse, out bool oui))
+            {
+                return oui;
+            }
+            else
+            {
+                return reponse;
+            }
         }
 
         static string Book(Customer customer, Room room,
