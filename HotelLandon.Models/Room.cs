@@ -31,7 +31,7 @@
         /// <param name="standing">Gamme de la chambre</param>
         /// <param name="isCleaned">Est-ce que la chambre est propre ?</param>
         /// <param name="isBooked">Est-ce que la chambre est réservée ?</param>
-        public Room(int floor, int number, object standing, bool isCleaned, bool isBooked) 
+        public Room(int floor, int number, object standing, bool isCleaned, bool isBooked)
             : this(floor, number)
         {
             Standing = standing;

@@ -25,7 +25,9 @@ namespace HotelLandon.Voyelle
 
             // tranformer les informations
             DateTime birthDate = DateTime.ParseExact(birth, "dd/MM/yyyy", null);
-            //bool isFemale2 = bool.Parse(isFemale);
+            DateTime startDate = DateTime.ParseExact(start, "dd/MM/yyyy", null);
+            DateTime endDate = DateTime.ParseExact(end, "dd/MM/yyyy", null);
+
             bool isFemale2;
             if (isFemale.Equals("oui", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -35,8 +37,6 @@ namespace HotelLandon.Voyelle
             {
                 isFemale2 = false;
             }
-            DateTime startDate = DateTime.ParseExact(start, "dd/MM/yyyy", null);
-            DateTime endDate = DateTime.ParseExact(end, "dd/MM/yyyy", null);
 
             // écrire les informations
             Customer customer;
@@ -50,21 +50,32 @@ namespace HotelLandon.Voyelle
             }
 
             string csv = Book(customer, new Room(1, 1), startDate, endDate);
+            
+            using (StreamWriter writer = new StreamWriter(@"C:\Demo\Reservations.txt"))
+            {
+                writer.WriteLine(csv);
+            }
+
+            using (StreamReader reader = new StreamReader(@"C:\Demo\Reservations.txt"))
+            {
+                var content = reader.ReadToEnd();
+                string[] data = content.Split(';');
+                Customer readedCustomer = new Customer(data[1], data[2], DateTime.ParseExact(data[3], "dd/MM/yyyy", null), bool.Parse(data[0]));
+                Console.WriteLine(readedCustomer.FirstName + " " + readedCustomer.LastName);
 
 
 
-            StreamWriter writer = new StreamWriter(@"C:\Demo\Reservations-WS.txt");
-            writer.WriteLine(csv);
-            writer.Close();
 
 
-            StreamReader reader = new StreamReader("");
-            var content = reader.ReadToEnd();
-            reader.Close();
 
-            FileStream fileStream = File.Create(@"");
-            byte[] bytes = Encoding.BigEndianUnicode.GetBytes(csv);
-            fileStream.Write(bytes);
+
+                
+
+
+
+
+
+            }
         }
 
         static string DemanderQuelquechose(string question)
@@ -83,8 +94,8 @@ namespace HotelLandon.Voyelle
             reservation.End = end;
 
             return $"{reservation.Customer.IsFemale};{reservation.Customer.FirstName};" +
-                $"{reservation.Customer.LastName};{reservation.Customer.BirthDate};" +
-                $"{reservation.Room.Number};{reservation.Start};{reservation.End};";
+                $"{reservation.Customer.LastName};{reservation.Customer.BirthDate.ToString("dd/MM/yyyy")};" +
+                $"{reservation.Room.Number};{reservation.Start.ToString("dd/MM/yyyy")};{reservation.End.ToString("dd/MM/yyyy")};";
         }
     }
 }
