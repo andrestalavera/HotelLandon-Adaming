@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelLandon.Voyelle", "Hote
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelLandon.Consonne", "HotelLandon.Consonne\HotelLandon.Consonne.csproj", "{6013C097-3164-4D0F-8F2B-6988D1BAE4F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelLandon.Database", "HotelLandon.Database\HotelLandon.Database.csproj", "{E702211A-4D41-4E64-A11A-674AF2F797D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelLandon.Database", "HotelLandon.Database\HotelLandon.Database.csproj", "{E702211A-4D41-4E64-A11A-674AF2F797D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Database", "Demo.Database\Demo.Database.csproj", "{B3BEA34B-6259-4A7A-8504-4FD70B15524C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Database", "Demo.Database\Demo.Database.csproj", "{B3BEA34B-6259-4A7A-8504-4FD70B15524C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
