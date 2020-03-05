@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using myRenamedContextWithUsing = HotelLandon.Database.HotelContext;
 
 namespace HotelLandon.Database
 {
@@ -11,7 +12,7 @@ namespace HotelLandon.Database
         static void Main(string[] args)
         {
             //Console.WriteLine("Hello Database");
-            HotelContext context = new HotelContext();
+            myRenamedContextWithUsing context = new myRenamedContextWithUsing();
             //Customer customer = new Customer()
             //{
             //    FirstName = "Andres",
@@ -42,7 +43,7 @@ namespace HotelLandon.Database
 
             // Affichage des chambres
             Console.WriteLine("Affichage des chambres avec linq to sql");
-            IQueryable<Room> orderedRooms = from r 
+            IQueryable<Room> orderedRooms = from r
                                             in context.Rooms
                                             orderby r.NumberRoom
                                             select r;
