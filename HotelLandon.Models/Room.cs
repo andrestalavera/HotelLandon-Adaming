@@ -46,7 +46,7 @@
         /// <returns>une chaîne de caractères</returns>
         public override string ToString()
         {
-            return base.ToString() + ": Etage: " + Floor + " Chambre: " + Number;
+            return $"{base.ToString()} Etage: {Floor} Chambre {Number}";
         }
     }
 }

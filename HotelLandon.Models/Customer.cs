@@ -27,7 +27,7 @@ namespace HotelLandon.Models
         public override string ToString()
         {
             string civility = IsFemale ? "Madame" : "Monsieur";
-            return civility + " " + FirstName + " " + LastName + " né(e) le " + BirthDate.ToString("dddd dd MMMM yyyy");
+            return $"{civility} {FirstName} {LastName} né(e) le {BirthDate.ToString("dddd dd MMMM yyyy")}";
         }
     }
 }
